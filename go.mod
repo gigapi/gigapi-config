@@ -1,4 +1,4 @@
-module github.com/gigapi-config
+module github.com/gigapi/gigapi-config
 
 go 1.24.2
 
