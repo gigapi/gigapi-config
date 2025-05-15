@@ -17,6 +17,10 @@ type GigapiConfiguration struct {
 	SaveTimeoutS float64 `json:"save_timeout_s" mapstructure:"save_timeout_s" default:"1"`
 	// Disable merging
 	NoMerges bool `json:"no_merges" mapstructure:"no_merges" default:"false"`
+	// Enable UI for querier
+	UI bool `json:"ui" mapstructure:"ui" default:"true"`
+	// Execution mode (readonly, writeonly, compaction, aio)
+	Mode string `json:"mode" mapstructure:"mode" default:"aio"`
 }
 
 type BasicAuthConfiguration struct {
@@ -24,22 +28,30 @@ type BasicAuthConfiguration struct {
 	Password string `json:"password" mapstructure:"password" default:""`
 }
 
-type Configuration struct {
-	Gigapi GigapiConfiguration `json:"gigapi" mapstructure:"gigapi" default:""`
-	// HTTP port to listen on
+type FlightSqlConfiguration struct {
+	// Port to run flightSQL server
+	Port int `json:"port" mapstructure:"port" default:"8082"`
+	// Enable FlightSQL server
+	Enable bool `json:"enable" mapstructure:"enable" default:"true"`
+}
+
+type HTTPConfiguration struct {
+	// Port to listen on
 	Port int `json:"port" mapstructure:"port" default:"7971"`
 	// Host to bind to (0.0.0.0 for all interfaces)
 	Host string `json:"host" mapstructure:"host" default:"0.0.0.0"`
-	// Basic authentication credentials
+	// Basic authentication configuration
 	BasicAuth BasicAuthConfiguration `json:"basic_auth" mapstructure:"basic_auth" default:""`
-	// FlightSQL port to listen on
-	FlightSqlPort int `json:"flightsql_port" mapstructure:"flightsql_port" default:"8082"`
-	// Disable UI for querier
-	DisableUI bool `json:"disable_ui" mapstructure:"disable_ui" default:"false"`
+}
+
+type Configuration struct {
+	Gigapi GigapiConfiguration `json:"gigapi" mapstructure:"gigapi" default:""`
+	// HTTP server configuration (reader and writer)
+	HTTP HTTPConfiguration `json:"http" mapstructure:"http" default:""`
+	// FlightSQL server configuration
+	FlightSql FlightSqlConfiguration `json:"flightsql" mapstructure:"flightsql" default:""`
 	// Log level (debug, info, warn, error, fatal)
 	Loglevel string `json:"loglevel" mapstructure:"loglevel" default:"info"`
-	// Execution mode (readonly, writeonly, compaction, aio)
-	Mode string `json:"mode" mapstructure:"mode" default:"aio"`
 }
 
 var Config *Configuration
