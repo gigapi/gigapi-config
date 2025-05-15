@@ -4,46 +4,23 @@
 
 This repository provides the configuration options for Gigapi modules. Below is a detailed breakdown of all the available configuration options and their usage.
 
-## Configuration Structure
+## Configuration Parameters
 
-The configuration is structured into the following sections:
-
-- **Gigapi**
-- **BasicAuth**
-- **Global Settings**
-
-### 1. Gigapi Configuration
-
-This section contains configurations specific to Gigapi functionality.
-
-| Key               | Type    | Default | Description                                   |
-|--------------------|---------|---------|-----------------------------------------------|
-| `gigapi.root`      | String  | `""`    | Root folder for all the data files.           |
-| `gigapi.merge_timeout_s` | Integer | `10`    | Base timeout between merges (in seconds).    |
-| `gigapi.save_timeout_s`  | Float   | `1`     | Timeout before saving the new data to disk (in seconds). |
-| `gigapi.no_merges` | Boolean | `false` | Disable merging functionality.                |
-
-### 2. Basic Authentication Configuration
-
-This section provides credentials for basic authentication.
-
-| Key              | Type    | Default | Description                                   |
-|-------------------|---------|---------|-----------------------------------------------|
-| `basic_auth.username` | String  | `""`    | Username for basic authentication.           |
-| `basic_auth.password` | String  | `""`    | Password for basic authentication.           |
-
-### 3. Global Settings
-
-These are general configurations that apply to the entire application.
-
-| Key                | Type    | Default   | Description                                   |
-|---------------------|---------|-----------|-----------------------------------------------|
-| `port`             | Integer | `7971`    | HTTP port to listen on.                       |
-| `host`             | String  | `0.0.0.0` | Host to bind to (e.g., `0.0.0.0` for all interfaces). |
-| `flightsql_port`   | Integer | `8082`    | FlightSQL port to listen on.                  |
-| `disable_ui`       | Boolean | `false`   | Disable the UI for the querier.               |
-| `loglevel`         | String  | `info`    | Log level (options: `debug`, `info`, `warn`, `error`, `fatal`). |
-| `mode`             | String  | `aio`     | Execution mode (options: `readonly`, `writeonly`, `compaction`, `aio`). |
+| Key                        | Type    | Default      | Description                                                           |
+|----------------------------|---------|--------------|-----------------------------------------------------------------------|
+| `gigapi.root`              | String  | `""`         | Root folder for all the data files.                                   |
+| `gigapi.merge_timeout_s`   | Integer | `10`         | Base timeout between merges (in seconds).                            |
+| `gigapi.save_timeout_s`    | Float   | `1`          | Timeout before saving the new data to disk (in seconds).             |
+| `gigapi.no_merges`         | Boolean | `false`      | Disable merging functionality.                                       |
+| `gigapi.ui`                | Boolean | `true`       | Enable UI for querier.                                               |
+| `gigapi.mode`              | String  | `aio`        | Execution mode (`readonly`, `writeonly`, `compaction`, `aio`).       |
+| `http.port`                | Integer | `7971`       | Port to listen on for the HTTP server.                               |
+| `http.host`                | String  | `0.0.0.0`    | Host to bind to (0.0.0.0 for all interfaces).                        |
+| `http.basic_auth.username` | String  | `""`         | Basic authentication username.                                       |
+| `http.basic_auth.password` | String  | `""`         | Basic authentication password.                                       |
+| `flightsql.port`           | Integer | `8082`       | Port to run the FlightSQL server.                                    |
+| `flightsql.enable`         | Boolean | `true`       | Enable FlightSQL server.                                             |
+| `loglevel`                 | String  | `info`       | Log level (`debug`, `info`, `warn`, `error`, `fatal`).               |
 
 ## Configuration Methods
 
@@ -54,7 +31,7 @@ You can configure the application using environment variables. Environment varia
 - `GIGAPI_ROOT`
 - `GIGAPI_MERGE_TIMEOUT_S`
 - `BASIC_AUTH_USERNAME`
-- `PORT`
+- `HTTP_PORT`
 
 ### Configuration File
 
@@ -69,17 +46,21 @@ gigapi:
   merge_timeout_s: 15
   save_timeout_s: 2.5
   no_merges: true
+  ui: true
+  mode: "aio"
 
-basic_auth:
-  username: "admin"
-  password: "securepassword"
+http:
+  port: 8080
+  host: "127.0.0.1"
+  basic_auth:
+    username: "admin"
+    password: "securepassword"
 
-port: 8080
-host: "127.0.0.1"
-flightsql_port: 9090
-disable_ui: true
+flightsql:
+  port: 9090
+  enable: true
+
 loglevel: "debug"
-mode: "readonly"
 ```
 
 #### Initialization and Default Handling
