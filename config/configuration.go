@@ -21,6 +21,13 @@ type GigapiConfiguration struct {
 	UI bool `json:"ui" mapstructure:"ui" default:"true"`
 	// Execution mode (readonly, writeonly, compaction, aio)
 	Mode string `json:"mode" mapstructure:"mode" default:"aio"`
+	// Index configuration for the data storage
+	Metadata MetadataConfiguration `json:"metadata" mapstructure:"metadata" default:""`
+}
+
+type MetadataConfiguration struct {
+	Type string `json:"type" mapstructure:"type" default:"json"`
+	URL  string `json:"url" mapstructure:"url" default:""`
 }
 
 type BasicAuthConfiguration struct {
