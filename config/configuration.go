@@ -35,7 +35,7 @@ type LayersConfiguration struct {
 	// Type of the layer (s3, fs)
 	Type string `json:"type" mapstructure:"type" default:""`
 	// If the layer is local for writer or global
-	Global bool `json:"globel" mapstructure:"globel" default:"false"`
+	Global bool `json:"global" mapstructure:"global" default:"false"`
 	// URL of the layer
 	//
 	//   Example: s3://key:secret@localhost:8181/bucket/prefix - s3 URL
