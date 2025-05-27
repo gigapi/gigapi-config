@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/spf13/viper"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -23,6 +24,22 @@ type GigapiConfiguration struct {
 	Mode string `json:"mode" mapstructure:"mode" default:"aio"`
 	// Index configuration for the data storage
 	Metadata MetadataConfiguration `json:"metadata" mapstructure:"metadata" default:""`
+	// Layers configuration
+	Layers []LayersConfiguration `json:"layers" mapstructure:"layers" default:""`
+}
+
+type LayersConfiguration struct {
+	// Name of the layer
+	Name string `json:"name" mapstructure:"name" default:""`
+	// Type of the layer (s3, fs)
+	Type string `json:"type" mapstructure:"type" default:""`
+	// If the layer is local for writer or global
+	Global bool `json:"globel" mapstructure:"globel" default:"false"`
+	// URL of the layer
+	//
+	//   Example: s3://key:secret@localhost:8181/bucket/prefix - s3 URL
+	//   Example: file:///data/folder/path - root path for filesystem
+	URL string `json:"url" mapstructure:"url" default:""`
 }
 
 type MetadataConfiguration struct {
@@ -95,7 +112,26 @@ func InitConfig(file string) {
 		Config.Gigapi.SaveTimeoutS = 1
 	}
 	setDefaults(Config)
+	setLayers()
 	fmt.Printf("Loaded configuration: %+v\n", Config)
+}
+
+func setLayers() {
+	for i := 0; ; i += 1 {
+		if os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_NAME", i)) == "" {
+			break
+		}
+		var l LayersConfiguration
+		l.Name = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_NAME", i))
+		l.Type = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_TYPE", i))
+		l.Global = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_GLOBAL", i)) == "true"
+		l.URL = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_URL", i))
+		if i < len(Config.Gigapi.Layers) {
+			Config.Gigapi.Layers[i] = l
+		} else {
+			Config.Gigapi.Layers = append(Config.Gigapi.Layers, l)
+		}
+	}
 }
 
 func setDefaults(config any) {
