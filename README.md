@@ -6,21 +6,25 @@ This repository provides the configuration options for Gigapi modules. Below is 
 
 ## Configuration Parameters
 
-| Key                        | Type    | Default      | Description                                                           |
-|----------------------------|---------|--------------|-----------------------------------------------------------------------|
-| `gigapi.root`              | String  | `""`         | Root folder for all the data files.                                   |
-| `gigapi.merge_timeout_s`   | Integer | `10`         | Base timeout between merges (in seconds).                            |
-| `gigapi.save_timeout_s`    | Float   | `1`          | Timeout before saving the new data to disk (in seconds).             |
-| `gigapi.no_merges`         | Boolean | `false`      | Disable merging functionality.                                       |
-| `gigapi.ui`                | Boolean | `true`       | Enable UI for querier.                                               |
-| `gigapi.mode`              | String  | `aio`        | Execution mode (`readonly`, `writeonly`, `compaction`, `aio`).       |
-| `http.port`                | Integer | `7971`       | Port to listen on for the HTTP server.                               |
-| `http.host`                | String  | `0.0.0.0`    | Host to bind to (0.0.0.0 for all interfaces).                        |
-| `http.basic_auth.username` | String  | `""`         | Basic authentication username.                                       |
-| `http.basic_auth.password` | String  | `""`         | Basic authentication password.                                       |
-| `flightsql.port`           | Integer | `8082`       | Port to run the FlightSQL server.                                    |
-| `flightsql.enable`         | Boolean | `true`       | Enable FlightSQL server.                                             |
-| `loglevel`                 | String  | `info`       | Log level (`debug`, `info`, `warn`, `error`, `fatal`).               |
+## Configuration Parameters
+
+| Key                        | Type    | Default      | Description                                                                                      |
+|----------------------------|---------|--------------|--------------------------------------------------------------------------------------------------|
+| `gigapi.root`              | String  | `""`         | Root folder for all the data files.                                                              |
+| `gigapi.merge_timeout_s`   | Integer | `10`         | Base timeout between merges (in seconds).                                                        |
+| `gigapi.save_timeout_s`    | Float   | `1`          | Timeout before saving the new data to disk (in seconds).                                         |
+| `gigapi.no_merges`         | Boolean | `false`      | Disable merging functionality.                                                                   |
+| `gigapi.ui`                | Boolean | `true`       | Enable UI for querier.                                                                           |
+| `gigapi.mode`              | String  | `aio`        | Execution mode (`readonly`, `writeonly`, `compaction`, `aio`).                                   |
+| `http.port`                | Integer | `7971`       | Port to listen on for the HTTP server.                                                           |
+| `http.host`                | String  | `0.0.0.0`    | Host to bind to (0.0.0.0 for all interfaces).                                                    |
+| `http.basic_auth.username` | String  | `""`         | Basic authentication username.                                                                   |
+| `http.basic_auth.password` | String  | `""`         | Basic authentication password.                                                                   |
+| `flightsql.port`           | Integer | `8082`       | Port to run the FlightSQL server.                                                                |
+| `flightsql.enable`         | Boolean | `true`       | Enable FlightSQL server.                                                                         |
+| `loglevel`                 | String  | `info`       | Log level (`debug`, `info`, `warn`, `error`, `fatal`).                                           |
+| `metadata.type`            | String  | `json`       | Type of metadata storage (json or redis).                                                        |
+| `metadata.url`             | String  | `""`         | Redis URL for metadata storage (if type is redis). Example: `redis://user:pass@localhost:6379/0` |
 
 ## Configuration Methods
 

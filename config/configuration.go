@@ -26,8 +26,15 @@ type GigapiConfiguration struct {
 }
 
 type MetadataConfiguration struct {
+	// Type of metadata storage (json or redis)
 	Type string `json:"type" mapstructure:"type" default:"json"`
-	URL  string `json:"url" mapstructure:"url" default:""`
+	// URL: Redis url in case of Redis metadata storage
+	//
+	// Example:
+	//  - redis://localhost:6379/0 - for no authentication
+	//  - redis://username:password@localhost:6379/0 - for password authentication
+	//  - rediss://username:password@localhost:6379/0 - for SSL
+	URL string `json:"url" mapstructure:"url" default:""`
 }
 
 type BasicAuthConfiguration struct {
