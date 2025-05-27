@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type GigapiConfiguration struct {
@@ -44,7 +45,7 @@ type LayersConfiguration struct {
 	//
 	//   Example: 1h - keep data for 1 hour
 	//   Example: 10m - keep data for 10 minutes
-	TTL string `json:"ttl" mapstructure:"ttl" default:""`
+	TTL time.Duration `json:"ttl" mapstructure:"ttl" default:""`
 }
 
 type MetadataConfiguration struct {
@@ -131,6 +132,11 @@ func setLayers() {
 		l.Type = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_TYPE", i))
 		l.Global = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_GLOBAL", i)) == "true"
 		l.URL = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_URL", i))
+		if fmt.Sprintf("GIGAPI_LAYERS_%d_TTL", i) == "" {
+			l.TTL = 0
+		} else {
+			l.TTL, _ = time.ParseDuration(os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_TTL", i)))
+		}
 		if i < len(Config.Gigapi.Layers) {
 			Config.Gigapi.Layers[i] = l
 		} else {
