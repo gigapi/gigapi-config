@@ -40,6 +40,11 @@ type LayersConfiguration struct {
 	//   Example: s3://key:secret@localhost:8181/bucket/prefix - s3 URL
 	//   Example: file:///data/folder/path - root path for filesystem
 	URL string `json:"url" mapstructure:"url" default:""`
+	// How long to keep data before moving to the next layer (empty for unlimited)
+	//
+	//   Example: 1h - keep data for 1 hour
+	//   Example: 10m - keep data for 10 minutes
+	TTL string `json:"ttl" mapstructure:"ttl" default:""`
 }
 
 type MetadataConfiguration struct {
