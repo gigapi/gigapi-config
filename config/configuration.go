@@ -143,6 +143,12 @@ func setLayers() {
 			Config.Gigapi.Layers = append(Config.Gigapi.Layers, l)
 		}
 	}
+	if len(Config.Gigapi.Layers) > 0 {
+		return
+	}
+	Config.Gigapi.Layers = []LayersConfiguration{
+		{Name: "default", Type: "fs", Global: true, URL: Config.Gigapi.Root},
+	}
 }
 
 func setDefaults(config any) {
