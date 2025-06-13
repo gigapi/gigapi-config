@@ -46,6 +46,15 @@ type LayersConfiguration struct {
 	//   Example: 1h - keep data for 1 hour
 	//   Example: 10m - keep data for 10 minutes
 	TTL time.Duration `json:"ttl" mapstructure:"ttl" default:""`
+	// Auth configuration for s3 layers
+	Auth LayerAuthConfiguration `json:"auth" mapstructure:"auth" default:""`
+}
+
+type LayerAuthConfiguration struct {
+	// Key for authentication
+	Key string `json:"key" mapstructure:"key" default:""`
+	// Secret for authentication
+	Secret string `json:"secret" mapstructure:"secret" default:""`
 }
 
 type MetadataConfiguration struct {
@@ -132,6 +141,8 @@ func setLayers() {
 		l.Type = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_TYPE", i))
 		l.Global = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_GLOBAL", i)) == "true"
 		l.URL = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_URL", i))
+		l.Auth.Key = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_AUTH_KEY", i))
+		l.Auth.Secret = os.Getenv(fmt.Sprintf("GIGAPI_LAYERS_%d_AUTH_SECRET", i))
 		if fmt.Sprintf("GIGAPI_LAYERS_%d_TTL", i) == "" {
 			l.TTL = 0
 		} else {
